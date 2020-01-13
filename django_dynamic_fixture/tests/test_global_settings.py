@@ -17,7 +17,7 @@ class AbstractGlobalSettingsTestCase(TestCase):
         if hasattr(conf.settings, 'DDF_DEFAULT_DATA_FIXTURE'): del conf.settings.DDF_DEFAULT_DATA_FIXTURE
         if hasattr(conf.settings, 'DDF_FILL_NULLABLE_FIELDS'): del conf.settings.DDF_FILL_NULLABLE_FIELDS
         if hasattr(conf.settings, 'DDF_IGNORE_FIELDS'): del conf.settings.DDF_IGNORE_FIELDS
-        if hasattr(conf.settings, 'DDF_NUMBER_OF_LAPS'): del conf.settings.DDF_NUMBER_OF_LAPS
+        if hasattr(conf.settings, 'DDF_SELF_FK_DEPTH'): del conf.settings.DDF_SELF_FK_DEPTH
         if hasattr(conf.settings, 'DDF_VALIDATE_MODELS'): del conf.settings.DDF_VALIDATE_MODELS
         reload_module(conf)
 
@@ -85,18 +85,18 @@ class DDF_IGNORE_FIELDS_TestCase(AbstractGlobalSettingsTestCase):
             reload_module(global_settings)
 
 
-class DDF_NUMBER_OF_LAPS_TestCase(AbstractGlobalSettingsTestCase):
+class DDF_SELF_FK_DEPTH_TestCase(AbstractGlobalSettingsTestCase):
     def test_not_configured_must_load_default_value(self):
         reload_module(global_settings)
-        assert global_settings.DDF_NUMBER_OF_LAPS == 0
+        assert global_settings.DDF_SELF_FK_DEPTH == 0
 
     def test_must_be_an_integer(self):
-        conf.settings.DDF_NUMBER_OF_LAPS = 2
+        conf.settings.DDF_SELF_FK_DEPTH = 2
         reload_module(global_settings)
-        assert global_settings.DDF_NUMBER_OF_LAPS == 2
+        assert global_settings.DDF_SELF_FK_DEPTH == 2
 
     def test_must_raise_an_exception_if_it_is_not_an_integer(self):
-        conf.settings.DDF_NUMBER_OF_LAPS = None
+        conf.settings.DDF_SELF_FK_DEPTH = None
         with pytest.raises(Exception):
             reload_module(global_settings)
 

@@ -5,6 +5,7 @@ Module that contains wrappers and shortcuts.
 This is the facade of all features of DDF.
 """
 import sys
+import warnings
 
 from django.conf import settings
 try:
@@ -66,11 +67,19 @@ except Exception as e:
     six.reraise(DDFImproperlyConfigured, DDFImproperlyConfigured("DDF_IGNORE_FIELDS (%s) must be a list of strings" % settings.DDF_IGNORE_FIELDS), sys.exc_info()[2])
 
 
-# DDF_NUMBER_OF_LAPS default = 1
+# DDF_SELF_FK_DEPTH default = 0
+error_msg = ''
+if hasattr(settings, 'DDF_SELF_FK_DEPTH'):
+    error_msg = "DDF_SELF_FK_DEPTH ({}) must be a positive integer number.".format(settings.DDF_SELF_FK_DEPTH)
 try:
-    DDF_NUMBER_OF_LAPS = int(settings.DDF_NUMBER_OF_LAPS) if hasattr(settings, 'DDF_NUMBER_OF_LAPS') else 0
+    DDF_SELF_FK_DEPTH = int(settings.DDF_SELF_FK_DEPTH) if hasattr(settings, 'DDF_SELF_FK_DEPTH') else 0
+    if DDF_SELF_FK_DEPTH < 0:
+        raise DDFImproperlyConfigured(error_msg)
 except Exception as e:
-    six.reraise(DDFImproperlyConfigured, DDFImproperlyConfigured("DDF_NUMBER_OF_LAPS (%s) must be a integer number." % settings.DDF_NUMBER_OF_LAPS), sys.exc_info()[2])
+    six.reraise(DDFImproperlyConfigured, DDFImproperlyConfigured(error_msg), sys.exc_info()[2])
+
+if hasattr(settings, 'DDF_NUMBER_OF_LAPS'):
+    warnings.warn("DDF DeprecationWarning: DDF_NUMBER_OF_LAPS was removed in favor of the new DDF_SELF_FK_DEPTH.", DeprecationWarning)
 
 
 # DDF_FIELD_FIXTURES default = {}

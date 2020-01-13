@@ -224,7 +224,7 @@ class NewDealWithSelfReferencesTest(DDFTestCase):
         assert instance.selfforeignkey.selfforeignkey is None # 2 cycles
 
     def test_new_create_n_laps_in_cycle(self):
-        self.ddf = DynamicFixture(data_fixture, number_of_laps=2)
+        self.ddf = DynamicFixture(data_fixture, number_fk_cycles=2)
         instance = self.ddf.new(ModelWithRelationships)
         assert instance.selfforeignkey is not None # 1 cycle
         assert instance.selfforeignkey.selfforeignkey is not None # 2 cycles
@@ -294,7 +294,7 @@ class NewDealWithCyclicDependenciesTest(DDFTestCase):
         assert c.d.c is None # 2 cycles
 
     def test_new_create_n_laps_in_cycle(self):
-        self.ddf = DynamicFixture(data_fixture, number_of_laps=2)
+        self.ddf = DynamicFixture(data_fixture, self_fk_depth=3)
         c = self.ddf.new(ModelWithCyclicDependency)
         assert c.d is not None
         assert c.d.c is not None # 1 cycle

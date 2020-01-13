@@ -112,15 +112,18 @@ This option is used by DDF to control cyclic dependencies (``ForeignKey`` by ``s
 
 In settings.py::
 
-    DDF_NUMBER_OF_LAPS = 1
+    # (deprecated in **3.0.3**. Use ``DDF_SELF_FK_DEPTH`` instead)
+    # DDF_NUMBER_OF_LAPS = 1
+    DDF_SELF_FK_DEPTH = 1
 
 In the test file::
 
-    instance = G(MyModel, number_of_laps=1)
+    # Deprecated in 3.0.3: instance = G(MyModel, number_of_laps=1)
+    instance = G(MyModel, self_fk_depth=1)
     assert instance.self_fk.id is not None
     assert instance.self_fk.self_fk.id is None
 
-    instance = G(MyModel, number_of_laps=2)
+    instance = G(MyModel, self_fk_depth=2)
     assert instance.self_fk.id is not None
     assert instance.self_fk.self_fk.id is not None
     assert instance.self_fk.self_fk.self_fk.id is None
