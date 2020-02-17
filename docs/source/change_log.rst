@@ -8,6 +8,14 @@ Change Log
 
 Date format: yyyy/mm/dd
 
+Version 3.0.3 - 2020/01/11
+-------------------------------------------------------------------------------
+  * <http://pypi.python.org/pypi/django-dynamic-fixture/3.0.3>
+  * Setting ``DDF_NUMBER_OF_LAPS`` deprecated in favor of ``DDF_SELF_FK_DEPTH``
+  * Parameter ``number_of_laps`` deprecated in favor of ``number_fk_cycles``
+  * Bugfix with ``DDF_NUMBER_OF_LAPS = 0``
+  * Bugfix
+
 Version 3.0.2 - 2020/01/10
 -------------------------------------------------------------------------------
   * <http://pypi.python.org/pypi/django-dynamic-fixture/3.0.2>
